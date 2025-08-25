@@ -1,5 +1,5 @@
 /* -- Global rules -- */
-@define-color background #161320;
+@import "mocha.css";
 
 * {
   border: none;
@@ -9,7 +9,7 @@
 }
 
 window#waybar {
-  background: rgba(34, 36, 54, 0.6);
+  background: alpha(@base, 0.9)
 }
 
 window#waybar.hidden {
@@ -23,15 +23,17 @@ window#waybar.hidden {
 .modules-left {
   margin: 10 0 5 10;
   padding-left: 10px;
-  background: alpha(@background, .8);
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, .6);
+  padding-right: 10px;
+  background: alpha(@base, .8);
+  box-shadow: 0px 0px 2px alpha(@lavender, .8);
+  border-radius: 10px;
 }
 
 .modules-right {
   margin: 10 10 5 0;
   border-radius: 10px;
-  background: alpha(@background, .8);
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, .6);
+  background: alpha(@base, .8);
+  box-shadow: 0px 0px 2px alpha(@lavender, .8);
 }
 
 /* - Genera rules for visible modules -- */
@@ -77,40 +79,62 @@ window#waybar.hidden {
 #custom-archicon {
   font-size: 20px;
   color: #89B4FA;
-  background: #161320;
   padding-right: 17px;
+}
+
+#clock {
+  color: @lavender;
+}
+
+#cpu {
+  color: @sapphire;
+}
+
+#memory {
+  color: @teal;
+}
+
+#disk {
+  color: @yellow;
 }
 
 
 #workspaces button {
-  color: #B5E8E0;
+  color: @flamingo;
   background: transparent;
   padding: 4px 4px;
   transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
 }
 
 #workspaces button.occupied {
-  color: #A6E3A1;
+  color: @sky;
 }
 
 #workspaces button.active {
-  color: #89B4FA;
+  color: @green;
   text-shadow: 0 0 4px #ABE9B3;
 }
 
 #workspaces button:hover {
-  color: #89B4FA;
+  color: @lavender;
 }
 
 #workspaces button.active:hover {}
 
 /* Modules right */
+#wireplumber {
+  color: @peach;
+}
+
 #network {
   padding-right: 13px;
+  color: @maroon;
+
 }
 
 #language {
   padding-right: 15px;
+  color: @mauve;
 }
 
 tooltip {

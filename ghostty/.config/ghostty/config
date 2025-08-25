@@ -47,4 +47,4 @@ background-blur = 5
 
 confirm-close-surface = false
 
-theme = tokyonight_moon
+theme = catppuccin-mocha
