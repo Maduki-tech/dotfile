@@ -32,6 +32,7 @@ return {
     },
 
     completion = {
+      trigger = { show_on_trigger_character = false },
       documentation = {
         auto_show = true,
         auto_show_delay_ms = 500,

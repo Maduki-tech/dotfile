@@ -13,3 +13,5 @@ end, { desc = 'Hover Documentation' })
 
 vim.keymap.set('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set('n', '<leader><leader>x', '<cmd>source %<CR>')
+
+vim.keymap.set('v', '<leader>cn', ':CarbonNow<CR>', { silent = true })

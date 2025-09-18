@@ -39,5 +39,7 @@ vim.o.inccommand = 'split'
 
 vim.o.cursorline = true
 
+vim.o.laststatus = 3
+
 vim.o.scrolloff = 10
 vim.o.confirm = false
