@@ -20,6 +20,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 vim.o.signcolumn = 'yes'
+vim.o.colorcolumn = '80'
 
 vim.o.updatetime = 250
 
