@@ -16,8 +16,13 @@ return {
       }
     end,
     keys = {
-      { '<c-s>', '<CR>', ft = 'copilot-chat', desc = 'Submit Prompt', remap = true },
-      { '<leader>a', '', desc = '+ai', mode = { 'n', 'v' } },
+      {
+        '<c-s>',
+        '<CR>',
+        ft = 'copilot-chat',
+        desc = 'Submit Prompt',
+        remap = true,
+      },
       {
         '<leader>aa',
         function()
@@ -86,7 +91,7 @@ return {
     end,
   },
 
-  -- Blink integration
+  -- Blink integraion
   {
     'saghen/blink.cmp',
     optional = true,

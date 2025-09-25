@@ -24,9 +24,9 @@ return {
         options = {
           theme = 'auto',
           globalstatus = vim.o.laststatus == 3,
-          disabled_filetypes = { statusline = { 'dashboard', 'alpha', 'ministarter', 'snacks_dashboard' } },
         },
         sections = {
+          -- LEFT COMPONENTS
           lualine_a = { 'mode' },
           lualine_b = { 'branch' },
 
@@ -42,6 +42,8 @@ return {
             },
             { 'filetype', icon_only = true, separator = '', padding = { left = 1, right = 0 } },
           },
+
+          -- RIGHT COMPONENTS
           lualine_x = {
             Snacks.profiler.status(),
             -- stylua: ignore
@@ -88,7 +90,7 @@ return {
             },
           },
           lualine_y = {
-            { 'progress', separator = ' ', padding = { left = 1, right = 0 } },
+            { 'filename', separator = ' ', padding = { left = 1, right = 0 } },
             { 'location', padding = { left = 0, right = 1 } },
           },
           lualine_z = {
