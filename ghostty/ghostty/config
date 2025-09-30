@@ -1,6 +1,12 @@
-background-opacity = 0.9
-background-blur = 5
+background-opacity = 0.8
+background-blur = 4
 confirm-close-surface = false
-theme = catppuccin-mocha
+font-size = 16
+font-family = JetBrains Mono
 
-font-size = 40
+#theme = catppuccin-mocha
+
+window-padding-x = 8
+window-padding-y = 8
+
+cursor-opacity = 0.4
