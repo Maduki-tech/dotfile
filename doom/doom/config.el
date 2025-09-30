@@ -1,3 +1,5 @@
+;;; config.el -*- lexical-binding: t; -*-
+
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
 (setq user-full-name "David Schlueter"
@@ -103,11 +105,6 @@
         )
   )
 
-(after! orderless
-  (setq completion-styles '(orderless)
-        completion-category-defaults nil
-        completion-category-overrides '((file ()))))
-
 
 (after! lsp-mode
   (setq lsp-completion-provider :none
@@ -118,3 +115,6 @@
 (map! :leader
       (:prefix ("s" . "search")
        :desc "Find files in project root" "f" #'projectile-find-file))
+
+
+(setq scroll-margin 20)
