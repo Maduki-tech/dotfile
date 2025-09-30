@@ -113,3 +113,8 @@
   (setq lsp-completion-provider :none
         lsp-completion-enable-additional-text-edit nil
         lsp-completion-show-kind t))
+
+
+(map! :leader
+      (:prefix ("s" . "search")
+       :desc "Find files in project root" "f" #'projectile-find-file))
