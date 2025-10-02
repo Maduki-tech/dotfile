@@ -55,3 +55,10 @@
 
 (unpin! org-roam)
 (package! org-roam-ui)
+
+(package! flymake-eslint)
+
+(package! copilot
+  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+
+(package! typescript-mode :disable t)

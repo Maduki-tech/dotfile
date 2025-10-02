@@ -1,21 +1,47 @@
+#+Title: Doom Literate Config
+#+AUTHOR: David Schlueter
+#+PROPERTY: header-args:emacs-lisp :tangle config.el
+
+* BASIC CONFIG
+#+begin_src emacs-lisp
 ;;; config.el -*- lexical-binding: t; -*-
 
+#+end_src
+
+* TODO User Setup
+#+BEGIN_SRC emacs-lisp
 (setq user-full-name "David"
       user-mail-address "d.schlueter1011@gmail.com")
+#+END_SRC
 
+* Style
+
+** Font
+#+begin_src emacs-lisp
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 18 )
       doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 18))
-
+#+end_src
+** Color Theme
+#+begin_src emacs-lisp
 (setq doom-theme 'catppuccin)
-
+#+end_src
+** Editor Setting
+#+begin_src emacs-lisp
 (setq display-line-numbers-type 'relative)
+#+end_src
 
+* Org-mode
+** Directory Setup
+
+#+begin_src emacs-lisp
 (setq org-directory "~/org/")
 (setq org-agenda-files '("~/org/inbox.org"
                          "~/org/tasks.org"
                          "~/org/notes.org"))
 (setq org-roam-directory (file-truename "~/org/roam/"))
-
+#+end_src
+** Templates
+#+begin_src emacs-lisp
 (setq org-capture-templates
       '(
         ;; Quick TODO (in tasks.org)
@@ -32,15 +58,28 @@
         ("j" "Journal" entry
          (file+datetree "~/org/inbox.org")
          "* %?\nEntered on %U\n  %i\n  %a" :empty-lines 1)))
+#+end_src
 
+** Org Roam
+*** Templates
+#+begin_src emacs-lisp
 (setq org-roam-capture-templates
       '(("d" "default" plain "%?"
          :if-new (file+head "${slug}.org"
                             "#+title: ${title}\n#+date: %U\n\n")
          :unnarrowed t)))
 
+#+end_src
+
+* Projectile
+#+begin_src emacs-lisp
 (setq projectile-project-search-path '(("~/personal/" . 2) ("~/.config" . 2)))
 
+#+end_src
+
+* Packages
+** TailwindCSS
+#+begin_src emacs-lisp
 (use-package lsp-tailwindcss
   :ensure t
   :after lsp-mode
@@ -48,7 +87,9 @@
   (setq lsp-tailwindcss-add-on-mode t
         lsp-tailwindcss-server-version "0.14.8"
         lsp-tailwindcss-skip-config-check t))
-
+#+end_src
+** Flymake-Eslint
+#+begin_src emacs-lisp
 (use-package flymake-eslint
   :ensure t
   :config
@@ -82,7 +123,10 @@ your override of `flymake-eslint-executable-name.'"
   ;; you can call interactivelly M-x lemacs/use-local-eslint RET
   ;; or add a hook like:
   (add-hook 'js-ts-mode-hook #'lemacs/use-local-eslint))
+#+end_src
 
+** Org-Roam-UI
+#+begin_src emacs-lisp
 (use-package! websocket
   :after org-roam)
 
@@ -93,7 +137,9 @@ your override of `flymake-eslint-executable-name.'"
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
-
+#+end_src
+** Corfu
+#+begin_src emacs-lisp
 (after! corfu
   ;; RET = accept like IntelliJ
   (define-key corfu-map (kbd "RET") #'corfu-insert)
@@ -113,7 +159,9 @@ your override of `flymake-eslint-executable-name.'"
         orderless-matching-styles '(orderless-flex)
         )
 )
-
+#+end_src
+** CopiloT
+#+begin_src emacs-lisp
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
@@ -121,14 +169,21 @@ your override of `flymake-eslint-executable-name.'"
               ("TAB" . 'copilot-accept-completion)
               ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
-
+#+end_src
+* Set Configs
+** LSP Mode
+#+begin_src emacs-lisp
 (after! lsp-mode
   (setq lsp-completion-provider :none
         lsp-completion-enable-additional-text-edit nil
         lsp-completion-show-kind t))
-
+#+end_src
+** Scroll Margin
+#+begin_src emacs-lisp
 (setq scroll-margin 20)
-
+#+end_src
+* Remaps
+#+begin_src emacs-lisp
 (map! :leader
       (:prefix ("s" . "search")
        :desc "Find files in project root" "f" #'projectile-find-file))
@@ -141,3 +196,4 @@ your override of `flymake-eslint-executable-name.'"
 (map! :leader
       (:prefix ("e" . "errors")
        :desc "Show diagnostic at point" "e" #'flymake-show-diagnostic))
+#+end_src
