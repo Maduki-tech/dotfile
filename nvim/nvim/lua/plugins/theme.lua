@@ -1,1 +1,0 @@
-/home/uwu/.config/omarchy/current/theme/neovim.lua
