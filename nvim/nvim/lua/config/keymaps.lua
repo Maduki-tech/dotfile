@@ -3,3 +3,4 @@
 -- Add any additional keymaps here
 
 vim.keymap.set("n", "Q", vim.cmd.x, { desc = "Save and quit" })
+vim.keymap.set("n", "<C-b>", "<CMD>Oil<cr>", { desc = "Open Oil" })
