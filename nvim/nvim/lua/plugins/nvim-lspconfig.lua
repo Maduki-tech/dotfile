@@ -1,6 +1,9 @@
 return {
   "neovim/nvim-lspconfig",
   opts = {
+    inlay_hints = {
+      enabled = false,
+    },
     -- make sure mason installs the server
     servers = {
       vtsls = {
@@ -16,16 +19,6 @@ return {
         },
         settings = {
           complete_function_calls = true,
-          typescript = {
-            inlayHints = {
-              enumMemberValues = { enabled = false },
-              functionLikeReturnTypes = { enabled = false },
-              parameterNames = { enabled = "literals" },
-              parameterTypes = { enabled = false },
-              propertyDeclarationTypes = { enabled = false },
-              variableTypes = { enabled = false },
-            },
-          },
         },
       },
     },
