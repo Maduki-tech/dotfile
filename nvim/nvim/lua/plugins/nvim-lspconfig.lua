@@ -4,6 +4,12 @@ return {
     inlay_hints = {
       enabled = false,
     },
+    diagnostics = {
+      float = {
+        border = "rounded",
+      },
+    },
+
     -- make sure mason installs the server
     servers = {
       vtsls = {
