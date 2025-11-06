@@ -10,12 +10,16 @@ return {
         return title
       end,
       templates = {
-        folder = "~/Obsidian Vault/06_Templates",
+        folder = "~/vault/06_Templates",
+      },
+      daily_notes = {
+        folder = "~/vault/01_Diary/Daily/",
+        template = "~/vault/06_Templates/Daily.md",
       },
       workspaces = {
         {
           name = "personal",
-          path = "~/Obsidian Vault/",
+          path = "~/vault/",
         },
       },
     },
