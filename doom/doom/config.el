@@ -63,13 +63,15 @@
 (setq projectile-project-search-path '(("~/personal/" . 2) ("~/.config" . 2)))
 
 ;; TailwindCSS LSP support
-(use-package lsp-tailwindcss
-  :ensure t
-  :after lsp-mode
-  :init
-  (setq lsp-tailwindcss-add-on-mode t
-        lsp-tailwindcss-server-version "0.14.8"
-        lsp-tailwindcss-skip-config-check t))
+;; (use-package lsp-tailwindcss
+;;   :ensure t
+;;   :after lsp-mode
+;;   :init
+;;   (setq lsp-tailwindcss-add-on-mode t
+;;         lsp-tailwindcss-server-version "0.14.8"
+;;         lsp-tailwindcss-skip-config-check t))
+
+(use-package! lsp-tailwindcss :after lsp-mode)
 
 
 (use-package! websocket
@@ -118,3 +120,49 @@
 
 
 (setq scroll-margin 20)
+
+;; active Org-babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(;; other Babel languages
+   (plantuml . t)))
+
+(setq org-plantuml-jar-path
+      (expand-file-name "/usr/share/java/plantuml/plantuml.jar"))
+
+
+
+(defun my/tsx-in-jsx-p ()
+  "Return non-nil if point is inside a JSX node in tsx-ts-mode."
+  (when (derived-mode-p 'tsx-ts-mode)
+    (let ((node (treesit-node-at (point))))
+      (catch 'yes
+        (while node
+          (when (member (treesit-node-type node)
+                        '("jsx_element" "jsx_fragment" "jsx_self_closing_element"
+                          "jsx_text" "jsx_opening_element" "jsx_closing_element"
+                          "jsx_attribute" "jsx_expression"))
+            (throw 'yes t))
+          (setq node (treesit-node-parent node)))
+        nil))))
+
+(defun my/tsx-smart-comment (beg end)
+  "Context-aware comment for TSX: JSX => {/* ... */}, else //."
+  (interactive (list (when (use-region-p) (region-beginning))
+                     (when (use-region-p) (region-end))))
+  (let* ((in-jsx (my/tsx-in-jsx-p))
+         (c-start (if in-jsx "{/* " "// "))
+         (c-end   (if in-jsx " */}" "")))
+    (let ((comment-start c-start)
+          (comment-end   c-end)
+          (comment-style (if in-jsx 'multi-line comment-style)))
+      (cond
+       ((use-region-p) (comment-or-uncomment-region beg end))
+       (t              (comment-line 1))))))
+
+;; Bind gc/gcc in tsx-ts-mode to the smart toggler
+(after! treesit
+  (map! :map tsx-ts-mode-map
+        :n "gc"  #'my/tsx-smart-comment
+        :v "gc"  #'my/tsx-smart-comment
+        :n "gcc" #'my/tsx-smart-comment))

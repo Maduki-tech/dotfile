@@ -10,11 +10,11 @@ return {
         return title
       end,
       templates = {
-        folder = "~/vault/06_Templates",
+        folder = "06_Templates",
       },
       daily_notes = {
-        folder = "~/vault/01_Diary/Daily/",
-        template = "~/vault/06_Templates/Daily.md",
+        folder = "01_Diary/Daily/",
+        template = "06_Templates/Daily.md",
       },
       workspaces = {
         {
