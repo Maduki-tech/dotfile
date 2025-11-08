@@ -42,22 +42,19 @@
                             "#+title: ${title}\n#+date: %U\n\n")
          :unnarrowed t)))
 
-(setq org-capture-templates
-      '(
-        ;; Quick TODO (in tasks.org)
-        ("t" "Todo" entry
-         (file+headline "~/org/tasks.org" "Inbox")
-         "* TODO %?\n  %U\n  %a" :empty-lines 1)
+(after! org
+  (setq org-capture-templates
+        '(
+          ;; Quick TODO (in tasks.org)
+          ("t" "Todo" entry
+           (file+headline "~/org/tasks.org" "Inbox")
+           "* TODO %?\n  %U\n  %a" :empty-lines 1)
 
-        ;; Quick note (in notes.org)
-        ("n" "Note" entry
-         (file+headline "~/org/notes.org" "Unsorted")
-         "* %?\n  %U\n  %a" :empty-lines 1)
-
-        ;; Capture daily log/journal in inbox.org
-        ("j" "Journal" entry
-         (file+datetree "~/org/inbox.org")
-         "* %?\nEntered on %U\n  %i\n  %a" :empty-lines 1)))
+          ;; Quick note (in notes.org)
+          ("n" "Note" entry
+           (file+headline "~/org/notes.org" "Unsorted")
+           "* %?\n  %U\n  %a" :empty-lines 1)
+          )))
 
 
 (setq projectile-project-search-path '(("~/personal/" . 2) ("~/.config" . 2)))
@@ -166,3 +163,13 @@
         :n "gc"  #'my/tsx-smart-comment
         :v "gc"  #'my/tsx-smart-comment
         :n "gcc" #'my/tsx-smart-comment))
+
+;; Copilot core ---
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
