@@ -59,17 +59,7 @@
 
 (setq projectile-project-search-path '(("~/personal/" . 2) ("~/.config" . 2)))
 
-;; TailwindCSS LSP support
-;; (use-package lsp-tailwindcss
-;;   :ensure t
-;;   :after lsp-mode
-;;   :init
-;;   (setq lsp-tailwindcss-add-on-mode t
-;;         lsp-tailwindcss-server-version "0.14.8"
-;;         lsp-tailwindcss-skip-config-check t))
-
 (use-package! lsp-tailwindcss :after lsp-mode)
-
 
 (use-package! websocket
   :after org-roam)
