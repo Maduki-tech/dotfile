@@ -1,17 +1,76 @@
+#+title: Config
+
+* Table of Contents :toc:
+- [[#user-info][User Info]]
+- [[#editor][Editor]]
+  - [[#font-settings][Font Settings]]
+  - [[#theme][Theme]]
+  - [[#line-numbers][Line Numbers]]
+  - [[#org][Org]]
+  - [[#defaults][Defaults]]
+- [[#org-settings][Org Settings]]
+  - [[#org-1][Org]]
+  - [[#org-roam][Org-Roam]]
+  - [[#org-agenda][Org-Agenda]]
+- [[#check-if-needed][Check if needed]]
+- [[#keymaps][Keymaps]]
+  - [[#better-search][Better Search]]
+- [[#packages][Packages]]
+  - [[#tailwind][Tailwind]]
+  - [[#org-roam-ui][Org-Roam-UI]]
+  - [[#corfu-ret-like-intellij][Corfu RET like IntelliJ]]
+  - [[#plantuml-in-org][Plantuml in Org]]
+  - [[#copilot][Copilot]]
+- [[#util-functions][Util Functions]]
+  - [[#better-comment-for-jsx][Better comment for JSX]]
+
+* User Info
+#+begin_src emacs-lisp
 (setq user-full-name "David Schlueter"
       user-mail-address "d.schlueter1011@gmail.com")
+#+end_src
 
+
+* Editor
+
+** Font Settings
+
+Bigger Font because im blind and nice Nerd font for some icons :) 
+
+#+begin_src emacs-lisp
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 18 )
       doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 18))
+#+end_src
 
+** Theme
+
+Nice Pastel theme that matches the OS
+
+#+begin_src emacs-lisp
 (setq doom-theme 'catppuccin)
+#+end_src
 
+** Line Numbers
+
+Better movement for my VIM mind
+
+#+begin_src emacs-lisp
 (setq display-line-numbers-type 'relative)
 (setq scroll-margin 20)
+#+end_src
 
+** Org
+
+*** Basic Settings
+
+#+begin_src emacs-lisp
 (setq org-modern-table-vertical 1)
 (setq org-modern-table t)
+#+end_src
 
+*** Headers
+
+#+begin_src emacs-lisp
 (custom-theme-set-faces!
   'catppuccin
   '(org-level-8 :inherit outline-3 :height 1.0)
@@ -24,9 +83,23 @@
   '(org-level-1 :inherit outline-1 :height 1.35)
   '(org-document-title :height 1.8 :bold t :underline nil)
   )
+#+end_src
 
+** Defaults
+
+#+begin_src emacs-lisp
 (setq confirm-kill-emacs nil)
+#+end_src
 
+
+* Org Settings
+** Org
+
+Setting the Org Directory in my home and having some =basic= templates.
+- *Todo* is for todos and also linked to my =org-agenda=
+- *Note* will be a place for all my fleeting notes that then get added to =org-roam=
+  
+#+begin_src emacs-lisp
 (setq org-directory "~/org/")
 
 (after! org
@@ -42,7 +115,14 @@
            (file+headline "~/org/notes.org" "Unsorted")
            "* %?\n  %U\n  %a" :empty-lines 1)
           )))
+#+end_src
 
+** Org-Roam
+
+Used for my Zettelkasten Method.
+- Just has a normal default template
+
+#+begin_src emacs-lisp
 (setq org-roam-directory (file-truename "~/org/roam/"))
 
 ;; Default capture template for `ROAM'
@@ -52,18 +132,44 @@
                             "#+title: ${title}\n#+date: %U\n\n")
          :unnarrowed t)))
 
+#+end_src
+
+** Org-Agenda
+
+- Looking for =todo= comments in this folders
+  
+#+begin_src emacs-lisp
 (setq org-agenda-files '("~/org/inbox.org"
                          "~/org/tasks.org"
                          "~/org/notes.org"))
+#+end_src
 
+* TODO Check if needed
+#+begin_src emacs-lisp
 (setq projectile-project-search-path '(("~/personal" . 2) ("~/.config" . 2)))
+#+end_src
 
+
+* Keymaps
+
+** Better Search
+
+#+begin_src emacs-lisp
 (map! :leader
       (:prefix ("s" . "search")
        :desc "Find files in project root" "f" #'projectile-find-file))
+#+end_src
 
+* Packages
+** Tailwind
+
+#+begin_src emacs-lisp
 (use-package! lsp-tailwindcss :after lsp-mode)
+#+end_src
 
+** Org-Roam-UI
+
+#+begin_src emacs-lisp
 (use-package! websocket
   :after org-roam)
 
@@ -74,7 +180,11 @@
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
+#+end_src
 
+** Corfu RET like IntelliJ
+
+#+begin_src emacs-lisp
 (after! corfu
   ;; RET = accept like IntelliJ
   (define-key corfu-map (kbd "RET") #'corfu-insert)
@@ -99,7 +209,11 @@
   (setq lsp-completion-provider :none
         lsp-completion-enable-additional-text-edit nil
         lsp-completion-show-kind t))
+#+end_src
 
+** Plantuml in Org
+
+#+begin_src emacs-lisp
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(;; other Babel languages
@@ -107,7 +221,12 @@
 
 (setq org-plantuml-jar-path
       (expand-file-name "/usr/share/java/plantuml/plantuml.jar"))
+#+end_src
 
+** Copilot
+
+
+#+begin_src emacs-lisp
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
@@ -115,7 +234,12 @@
               ("TAB" . 'copilot-accept-completion)
               ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
+#+end_src
 
+* Util Functions
+
+** Better comment for JSX
+#+begin_src emacs-lisp
 (defun my/tsx-in-jsx-p ()
   "Return non-nil if point is inside a JSX node in tsx-ts-mode."
   (when (derived-mode-p 'tsx-ts-mode)
@@ -150,3 +274,4 @@
         :n "gc"  #'my/tsx-smart-comment
         :v "gc"  #'my/tsx-smart-comment
         :n "gcc" #'my/tsx-smart-comment))
+#+end_src
