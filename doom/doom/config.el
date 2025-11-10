@@ -11,6 +11,7 @@
 
 (setq org-modern-table-vertical 1)
 (setq org-modern-table t)
+(setq toc-org-max-depth 5)
 
 (custom-theme-set-faces!
   'catppuccin

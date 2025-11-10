@@ -1,16 +1,15 @@
 return {
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-  -- specs = {
-  --   {
-  --     "akinsho/bufferline.nvim",
-  --     optional = true,
-  --     opts = function(_, opts)
-  --       if (vim.g.colors_name or ""):find("catppuccin") then
-  --         opts.highlights = require("catppuccin.special.bufferline").get_theme()
-  --       end
-  --     end,
-  --   },
-  -- },
+  { "ellisonleao/gruvbox.nvim" },
+  { "rebelot/kanagawa.nvim" },
+  { "catppuccin/nvim", name = "catppuccin", lazy = false },
+  { "rose-pine/neovim", name = "rose-pine" },
+  { "sainnhe/everforest" },
+  { "bluz71/vim-nightfly-colors" },
+  { "NLKNguyen/papercolor-theme" },
+  { "romainl/Apprentice" },
+  { "folke/tokyonight.nvim" },
+
+  -- Configure LazyVim to load colorscheme
   {
     "LazyVim/LazyVim",
     opts = {

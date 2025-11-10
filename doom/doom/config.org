@@ -1,12 +1,15 @@
 #+title: Config
 
-* Table of Contents :toc:
+* Table of Contents :TOC:
 - [[#user-info][User Info]]
 - [[#editor][Editor]]
   - [[#font-settings][Font Settings]]
   - [[#theme][Theme]]
   - [[#line-numbers][Line Numbers]]
   - [[#org][Org]]
+    - [[#basic-settings][Basic Settings]]
+      - [[#styling][Styling]]
+    - [[#headers][Headers]]
   - [[#defaults][Defaults]]
 - [[#org-settings][Org Settings]]
   - [[#org-1][Org]]
@@ -66,6 +69,7 @@ Better movement for my VIM mind
 #+begin_src emacs-lisp
 (setq org-modern-table-vertical 1)
 (setq org-modern-table t)
+(setq toc-org-max-depth 5)
 #+end_src
 
 *** Headers
