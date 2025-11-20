@@ -18,7 +18,7 @@ return {
       html = { "prettierd" },
       css = { "prettierd" },
       scss = { "prettierd" },
-      markdown = { "prettierd" },
+      markdown = { "markdownfmt" },
       java = { "clang_format" },
     },
   },
