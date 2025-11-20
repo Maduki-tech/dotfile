@@ -1,0 +1,5 @@
+{
+  "version": "0.0.55",
+  "pkg_update": false,
+  "changelog": ["<b>fix:</b> Fixed dock not updating."]
+}
