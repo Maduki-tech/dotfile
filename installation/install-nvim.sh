@@ -4,7 +4,6 @@
 if which nvim >/dev/null 2>&1; then
     echo "Neovim is already installed."
     nvim --version
-    exit 0
 fi
 
 # Install dependencies
