@@ -67,6 +67,17 @@ button:hover {
     border-left: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+#windowcount,
+#custom-updates,
+#custom-archicon {
+    color: #ffffff;
+}
+
+#custom-spotify {
+    padding-right: 10px;
+    color: #ffffff;
+}
+
 #window,
 #workspaces {
     margin: 0 4px;
@@ -149,9 +160,6 @@ label:focus {
 
 #wireplumber {
     color: #000000;
-}
-
-#custom-media.custom-spotify {
 }
 
 #temperature {
