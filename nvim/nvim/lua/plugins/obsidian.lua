@@ -2,7 +2,6 @@ return {
   {
     "obsidian-nvim/obsidian.nvim",
     version = "*",
-    ft = "markdown",
     ---@module 'obsidian'
     ---@type obsidian.config
     opts = {
@@ -22,6 +21,15 @@ return {
           path = "~/vault/",
         },
       },
+
+      vim.keymap.set("n", "<leader>o", function() end),
+      { desc = "Obsidian" },
+
+      vim.keymap.set("n", "<leader>oo", "<cmd>Obsidian<cr>", { desc = "Obsidian Menu" }),
+
+      vim.keymap.set("n", "<leader>on", function()
+        require("obsidian").new_note()
+      end, { desc = "Obsidian: New Note" }),
     },
   },
 }
