@@ -12,6 +12,27 @@ return {
 
     -- make sure mason installs the server
     servers = {
+      lua_ls = {
+        settings = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT",
+            },
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME,
+              },
+            },
+            completion = {
+              callSnippet = "Replace",
+            },
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
+      },
       vtsls = {
         -- explicitly add default filetypes, so that we can extend
         -- them in related extras
