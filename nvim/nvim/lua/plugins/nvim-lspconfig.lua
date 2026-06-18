@@ -49,5 +49,24 @@ return {
         },
       },
     },
+
+    -- Custom setup function to hook up the non-Mason QML language server
+    setup = {
+      qml_language_server = function()
+        local lspconfig = require("lspconfig")
+
+        lspconfig.qml_language_server = {
+          default_config = {
+            cmd = { "qml-language-server" },
+            filetypes = { "qml", "qmljs" },
+            root_dir = lspconfig.util.root_pattern("qmlls.ini", ".git", "."),
+            single_file_support = true,
+          },
+        }
+
+        lspconfig.qml_language_server.setup({})
+        return true -- Prevents this server from trying to load via Mason
+      end,
+    },
   },
 }
