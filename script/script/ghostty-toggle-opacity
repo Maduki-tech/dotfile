@@ -1,0 +1,12 @@
+#!/bin/bash
+CONFIG="$HOME/.config/ghostty/config"
+
+current=$(grep '^background-opacity' "$CONFIG" | awk -F'= ' '{print $2}')
+
+if [ "$current" = "1.0" ]; then
+  sed -i 's/^background-opacity = .*/background-opacity = 0.8/' "$CONFIG"
+else
+  sed -i 's/^background-opacity = .*/background-opacity = 1.0/' "$CONFIG"
+fi
+
+pkill -SIGUSR2 ghostty

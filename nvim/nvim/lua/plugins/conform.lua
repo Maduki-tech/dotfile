@@ -21,7 +21,18 @@ return {
       css = { "prettier" },
       scss = { "prettier" },
       markdown = { "markdownfmt" },
-      java = { "clang_format" },
+      java = { "clang_format_java" },
+    },
+    formatters = {
+      clang_format_java = {
+        command = "clang-format",
+        args = {
+          "--style={BasedOnStyle: Google, IndentWidth: 4, TabWidth: 4, UseTab: Never, ColumnLimit: 80, BinPackParameters: false, BinPackArguments: false, AlignAfterOpenBracket: AlwaysBreak, AllowShortFunctionsOnASingleLine: None, AllowShortIfStatementsOnASingleLine: Never, AllowShortLoopsOnASingleLine: false, AccessModifierOffset: -4, IndentCaseLabels: true, ContinuationIndentWidth: 8}",
+          "--assume-filename",
+          "$FILENAME",
+        },
+        stdin = true,
+      },
     },
   },
 }
