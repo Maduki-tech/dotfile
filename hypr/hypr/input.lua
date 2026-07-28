@@ -33,6 +33,8 @@ hl.config({
 o.window("(Alacritty|kitty)", { scroll_touchpad = 1.5 })
 o.window("com.mitchellh.ghostty", { scroll_touchpad = 0.2 })
 
--- Enable touchpad gestures for changing workspaces.
+-- Touchpad gesture for changing workspaces is bound in bindings.lua instead
+-- of here: the built-in action = "workspace" gesture only cycles Hyprland's
+-- global workspace list, ignoring the per-monitor "hyprsplit-<monitor>-<slot>"
+-- workspaces set up there, so it needs the same slot-naming helpers.
 -- See https://wiki.hypr.land/Configuring/Gestures/
-hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
