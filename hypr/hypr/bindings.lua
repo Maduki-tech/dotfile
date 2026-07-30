@@ -80,11 +80,24 @@ local hyprsplitCurrentSlotByMonitor = {}
 -- Seed from whatever's active right now, so the very first swipe after a
 -- config reload (before any other switch fires the event below) still
 -- starts from the real slot instead of guessing 1.
-for _, monitor in ipairs(hl.get_monitors()) do
-	local name = monitor.activeWorkspace and monitor.activeWorkspace.name
-	local slot = name and tonumber(name:match("^hyprsplit%-.+%-(%d+)$"))
-	if slot then
-		hyprsplitCurrentSlotByMonitor[monitor.name] = slot
+--
+-- Iterate with rawget instead of ipairs: omarchy-menu-keybindings loads this
+-- file under a Lua stub where hl.get_monitors() returns a noop proxy whose
+-- __index returns itself for every numeric key, so ipairs() never terminates.
+local monitors = hl.get_monitors()
+if type(monitors) == "table" then
+	local i = 1
+	while true do
+		local monitor = rawget(monitors, i)
+		if monitor == nil then
+			break
+		end
+		local name = monitor.activeWorkspace and monitor.activeWorkspace.name
+		local slot = name and tonumber(name:match("^hyprsplit%-.+%-(%d+)$"))
+		if slot then
+			hyprsplitCurrentSlotByMonitor[monitor.name] = slot
+		end
+		i = i + 1
 	end
 end
 
