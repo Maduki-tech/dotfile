@@ -1,0 +1,37 @@
+[
+  {
+    "key": "ctrl+h",
+    "command": "-workbench.action.navigateLeft"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "-workbench.action.navigateDown"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "-workbench.action.navigateUp"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "-workbench.action.navigateRight"
+  },
+  {
+    "key": "ctrl+b",
+    "command": "-workbench.action.toggleSidebarVisibility",
+    "when": "editorTextFocus && neovim.init"
+  },
+  {
+    "key": "ctrl+s",
+    "command": "-workbench.action.files.save",
+    "when": "editorTextFocus && neovim.init"
+  },
+  {
+    "key": "ctrl+w",
+    "command": "-workbench.action.switchWindow"
+  },
+  {
+    "key": "space",
+    "command": "-workbench.action.quickOpen",
+    "when": "editorTextFocus && neovim.init && neovim.mode == normal"
+  }
+]
