@@ -33,9 +33,40 @@ o.bind("switch:off:Lid Switch", nil, "~/.config/hypr/scripts/laptop-display.sh o
 -- ("hyprsplit-<monitor name>-<slot>") instead of a real plugin.
 local hyprsplitWorkspaceCount = 5
 
+-- A named hyprsplit workspace encodes the monitor it was created on
+-- ("hyprsplit-<monitor>-<slot>"), but Hyprland lets workspaces drift to other
+-- monitors: monitor removal (workspaces migrate to the remaining monitors)
+-- and lid/hotplug cycles all move them. Once a workspace lives on a different
+-- monitor than its name says, SUPER+1..5 (computed from the current monitor's
+-- name) teleports focus to wherever the workspace drifted and windows seem to
+-- relocate by themselves. Before switching, pull any drifted workspace back
+-- onto its namesake monitor so the name always matches reality.
+local function hyprsplitEnsureOnWorkspace(workspaceName, monitorName)
+	local workspaces = hl.get_workspaces()
+	if type(workspaces) ~= "table" then
+		return
+	end
+	local i = 1
+	while true do
+		local workspace = rawget(workspaces, i)
+		if workspace == nil then
+			return
+		end
+		local wsMonitor = workspace.monitor
+		local wsMonitorName = type(wsMonitor) == "table" and wsMonitor.name or wsMonitor
+		if workspace.name == workspaceName and wsMonitorName ~= monitorName then
+			hl.dispatch(hl.dsp.workspace.move({ workspace = "name:" .. workspaceName, monitor = monitorName }))
+			return
+		end
+		i = i + 1
+	end
+end
+
 local function hyprsplitWorkspaceTarget(slot)
 	local monitor = hl.get_active_monitor()
-	return "name:hyprsplit-" .. monitor.name .. "-" .. tostring(slot)
+	local name = "hyprsplit-" .. monitor.name .. "-" .. tostring(slot)
+	hyprsplitEnsureOnWorkspace(name, monitor.name)
+	return "name:" .. name
 end
 
 for slot = 1, hyprsplitWorkspaceCount do
@@ -146,11 +177,63 @@ hl.gesture({
 	end,
 })
 
-o.bind(
-	"SUPER + S",
-	"Swap workspace with next monitor",
-	hl.dsp.workspace.swap_monitors({ monitor1 = "current", monitor2 = "+1" })
-)
+-- Swap the *windows* on each monitor's active workspace, not the workspace
+-- objects themselves. hl.dsp.workspace.swap_monitors moves the named
+-- hyprsplit-<monitor>-<slot> workspaces onto the other monitor, after which
+-- SUPER+1..5 / hyprsplitEnsureOnWorkspace yank them back by name and the
+-- windows appear to "detach" from the slot you swapped onto. Matching
+-- hyprsplit's split:swapactiveworkspaces keeps each named workspace on its
+-- namesake monitor and only exchanges the window lists.
+local function hyprsplitCollectWindows(workspace)
+	local windows = {}
+	if not workspace then
+		return windows
+	end
+	local list = hl.get_workspace_windows(workspace)
+	if type(list) ~= "table" then
+		return windows
+	end
+	-- rawget: same noop-proxy trap as get_monitors() under omarchy-menu.
+	local i = 1
+	while true do
+		local win = rawget(list, i)
+		if win == nil then
+			break
+		end
+		windows[#windows + 1] = win
+		i = i + 1
+	end
+	return windows
+end
+
+local function hyprsplitSwapActiveWorkspaces()
+	local mon1 = hl.get_active_monitor()
+	local mon2 = hl.get_monitor("+1")
+	if not mon1 or not mon2 or mon1.name == mon2.name then
+		return
+	end
+
+	local ws1 = hl.get_active_workspace(mon1)
+	local ws2 = hl.get_active_workspace(mon2)
+	if not ws1 or not ws2 or ws1.special or ws2.special then
+		return
+	end
+
+	-- Snapshot before moving: each move mutates the workspace window lists.
+	local windows1 = hyprsplitCollectWindows(ws1)
+	local windows2 = hyprsplitCollectWindows(ws2)
+	local target1 = "name:" .. ws1.name
+	local target2 = "name:" .. ws2.name
+
+	for _, win in ipairs(windows1) do
+		hl.dispatch(hl.dsp.window.move({ window = win, workspace = target2, follow = false }))
+	end
+	for _, win in ipairs(windows2) do
+		hl.dispatch(hl.dsp.window.move({ window = win, workspace = target1, follow = false }))
+	end
+end
+
+o.bind("SUPER + S", "Swap workspace windows with next monitor", hyprsplitSwapActiveWorkspaces)
 
 -- Named hyprsplit-<monitor>-<slot> workspaces above are only ever created
 -- lazily, the first time SUPER+1..5 is pressed on a given monitor. Without
@@ -160,8 +243,10 @@ o.bind(
 -- user manually presses a workspace key. Force every monitor onto its own
 -- "-1" slot immediately instead.
 local function hyprsplitInitMonitor(monitor)
+	local name = "hyprsplit-" .. monitor.name .. "-1"
+	hyprsplitEnsureOnWorkspace(name, monitor.name)
 	hl.dispatch(hl.dsp.focus({ monitor = monitor.name }))
-	hl.dispatch(hl.dsp.focus({ workspace = "name:hyprsplit-" .. monitor.name .. "-1" }))
+	hl.dispatch(hl.dsp.focus({ workspace = "name:" .. name }))
 end
 
 local function hyprsplitInitAllMonitors()
