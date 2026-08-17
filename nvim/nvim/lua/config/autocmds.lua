@@ -14,3 +14,12 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt.formatoptions:remove({ "r", "o" })
   end,
 })
+
+-- Conceal markdown markers so render-markdown can style them
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown", "markdown.mdx" },
+  callback = function()
+    vim.opt_local.conceallevel = 2
+    vim.opt_local.concealcursor = "nc"
+  end,
+})

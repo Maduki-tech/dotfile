@@ -266,3 +266,7 @@ hl.on("hyprland.start", hyprsplitInitAllMonitors)
 hl.on("monitor.added", function(monitor)
 	hyprsplitInitMonitor(monitor)
 end)
+
+-- plugin
+-- Tab
+dofile(os.getenv("HOME") .. "/.config/omarchy/plugins/vbrosseau.alttab/omarchy-plugin/alttab-bindings.lua")

@@ -1,7 +1,5 @@
 # CLAUDE.md
-
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Repository Overview
 
 This is a personal dotfile repository for an Arch Linux development environment. It manages configurations for Neovim (LazyVim), Tmux, Ghostty terminal, and various utility scripts. The repository uses **GNU Stow** for symlink-based deployment.
