@@ -270,3 +270,5 @@ end)
 -- plugin
 -- Tab
 dofile(os.getenv("HOME") .. "/.config/omarchy/plugins/vbrosseau.alttab/omarchy-plugin/alttab-bindings.lua")
+
+o.bind("SUPER + SHIFT + T", nil, hl.dsp.global("maduki-tech.omado:quick-add"))
